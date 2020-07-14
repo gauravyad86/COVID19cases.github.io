@@ -1,0 +1,305 @@
+<!-- loader from https://codepen.io/slmnbj/pen/fJGdH -->
+
+<!--
+  Made By - GAURAV YADAV
+  Date    - 14-07-2020 03:24
+  
+  Credit goes to https://coronavirus-19-api.herokuapp.com
+  and https://covid19-docs.chrismichael.now.sh/
+  and https://canvasjs.com
+  and w3schools.com
+  
+  images from http://www.emro.who.int/health-topics/corona-virus/protect-yourself-and-others.html
+  http://www.emro.who.int/health-topics/corona-virus/about-covid-19.html
+-->
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <tittle>Coded by Gaurav Yadav</tittle>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet" type="text/css" >
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        
+       <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+        
+    </head>
+    <body>
+        <div class="loader">
+            <div>U</div>
+            <div>A</div>
+            <div>R</div>
+            <div>U</div>
+            <div>A</div>
+            <div>G</div>
+        </div>
+        <div id="myNav" class="overlay">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="overlay-content">
+                <button onclick="getTopTenCountriesByTotal()" class="btn btn-primary">Top 10 Country By Total Cases</button><br>
+                <button onclick="getTopTenCountriesByActive()" class="btn btn-info">Top 10 Country By Active Cases</button><br>
+                <button onclick="getTopTenCountriesByDeath()" class="btn btn-danger">Top 10 Country By Death</button><br>
+                <button onclick="getTopTenCountriesByRecovered()" class="btn btn-success">Top 10 Country By Recovered</button><br>
+                <button class="btn btn-success protect">Protect Yourself</button><br>
+                <button class="btn btn-info IndiaCasesByStates">India Cases By State</button><br>
+                <button class="btn btn-success fatalityRate">Fatality Rate By Age</button><br>
+                <button class = " btn btn-danger confirmedanddeath">Confirmed Cases and Deaths by Country</button>
+                <script type="text/javascript" src="script.js"></script>
+          </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="card" id="card1">
+                        <div class= "card-header bg-primary text-white text-center navbar1">
+                            <b>Covid-19 Cases Info</b> <span style="font-size:30px;cursor:pointer;margin-left:20px;" onclick="openNav()">&#9776;</span></div>
+                        <div class="card-body" style = "margin-bottom:70px;">
+                            <div id="globalData">
+                                <button class = "collapsible1 bg-info">Total Summary</button>
+                                <div class="card-columns">
+                                    <div class="card bg-primary text-center text-white">
+                                        <div class="card-header">Total Cases</div>  
+                                        <div class="card-body">
+                                            <i class="fa fa-user"></i><br>
+                                            <span id = "totalCases"></span><br>
+                                            😦😦😦😦😦😦
+                                        </div>
+                                    </div>
+                                    <div class="card bg-warning text-center text-white">
+                                        <div class="card-header">Today Cases</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-user"></i><br>
+                                            <span id = "todayCases"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-danger text-center text-white">
+                                        <div class="card-header">Total Deaths</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-frown-o" aria-hidden="true"></i><br>
+                                            <span id = "deaths"></span><br>
+                                            😢😢😢😢😢😢
+                                        </div>
+                                    </div>
+                                    <div class="card bg-danger text-center text-white">
+                                        <div class="card-header">Today Deaths</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-frown-o" aria-hidden="true"></i><br>
+                                            <span id = "todayDeaths"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-success text-center text-white">
+                                        <div class="card-header">Recovered</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-smile-o"></i><br>
+                                            <span id = "recovered"></span><br>
+                                            💃💃💃🕺🕺🕺
+                                        </div>
+                                    </div>
+                                    <div class="card bg-info text-center text-white">
+                                        <div class="card-header">Active</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i><br>
+                                            <span id = "active"></span><br>
+                                            😔😔😔😔😔😔
+                                        </div>
+                                    </div>
+                                    <div class="card bg-danger text-center text-white">
+                                        <div class="card-header">Critical</div>
+                                        <div class="card-body">
+                                            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i><br>
+                                            <span id = "critical"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-light text-center">
+                                        <div class="card-header">Cases Per One Million</div>
+                                        <div class="card-body">
+                                            <span id = "casesPerOneMillion"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-info text-center text-white">
+                                        <div class="card-header">Deaths Per One Million</div>
+                                        <div class="card-body">
+                                            <span id = "deathsPerOneMillion"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-columns">
+                                    <div class="card bg-primary">
+                                        <div class="card-body text-center">
+                                            <div id="chartContainer2" class = "chartContainer2" style="height: 280px; width: 100%;"></div>
+                                            <div class = "chartContainer2">   
+                                                <p>Click on circle to check details.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-primary">
+                                        <div class="card-body text-center">
+                                            <div id="chartContainer3" class = "chartContainer3" style="height: 280px; width: 100%;"></div>
+                                            <div class = "chartContainer3">
+                                                <p>Click on box to check details.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="countryWise">
+                                <input type="text" id="myInput" onkeyup="filterTable()" placeholder="Filter by Country..." title="Type in a name">
+                                <div class="card-columns countryWise">
+                                    
+                                </div>
+                            </div>
+                            <div id="countryWiseCases">
+                                <select id="countryList" class="custom-select" style="width:300px;" onchange = "getReport()">
+                                    <option value = "zero">Select Your Country</option>
+                                </select>
+                                <div class = "card box-shadow img-fluid">
+                                    <img class="card-img-top" src="" alt="Card image" style="width:100%; height: 250px;" id = "flag">
+                                    <div class = "card-body card-img-overlay">
+                                        <h4 class="card-title text-center" id = "country_name"></h4>
+                                        <div class="bg-text">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="protectYourself" class="protectYourself">
+                                <div class="card">
+                                    <div class = "card-header bg-warning text-center text-white">Protect yourself and others</div>
+                                    <div class="card-body text-center row1" id = "protectYourselfDetails">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div id = "aboutCovid">
+                                <div class = "card">
+                                    <img class="card-img-top" src="https://www.dropbox.com/s/2x4fl15wjxqlhyr/about_covid.jpg?raw=1" alt="Card image" style="width:100%;height:200px;">
+                                    <div class = "card-body">
+                                        <h4 class="card-title text-white">About Covid - 19</h4>
+                                        <div class="card-columns" id = "aboutCovidData">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id = "IndianStateData">
+                                <div class = "card">
+                                    <div class = "card-body bg-light">
+                                        <div class="table-responsive" style = "height: 450px;">
+                                            <table class="table table-dark table-striped" id = "reportTable">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table></div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div id = "fatalityRateByAge">
+                                <div class = "card">
+                                    <div class = "card-header bg-success text-center text-white font-size">Fatality Rate By Age - Age of Coronavirus Deaths - COVID-19 Fatality Rate by AGE</div>
+                                    <div class = "card-body bg-info">
+                                        <p>Death Rate = (number of deaths / number of cases) = probability of dying if infected by the virus (%).</p>
+                                        
+                                        <p>This probability differs depending on the age group. The percentages shown below do not have to add up to 100%, as they do NOT represent share of deaths by age group. Rather, it represents, for a person in a given age group, the risk of dying if infected with COVID-19. </p>
+                                        
+                                         <p>
+                                            The percentages do not have to add up to 100%, as they do NOT represent share of deaths by age group.</p>
+                                        
+                                        <div class="table-responsive">
+                                            <table class="table table-dark table-striped" id = "reportTable1">
+                                                <thead></thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                             <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button> 
+                        </div>
+                        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom" id = "bottom-nav">
+                            <span class="navbar-brand">right @ <script>document.write(new Date().getFullYear());</script> <b class="name" id="name1">Gaurav Yadav</b></span>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link global active">
+                                        <i class="fa fa-globe" aria-hidden="true"></i><br>Global
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link countries">
+                                        <i class="fa fa-flag" aria-hidden="true"></i><br>
+                                        Countries
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link information">
+                                        <i class="fa fa-info" aria-hidden="true"></i><br> 
+                                        About Covid
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                
+                        <!-- Modal Header -->
+                        <div class="modal-header bg-primary text-white">
+                            <h6 class="modal-title">Top 10 Countries Info</h6>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button></div>
+                        <div id="chartContainer" style="height: 280px; width: 100%;"></div>
+                        <div>
+                            <p>Click on circle to check details.</p>
+                        </div>
+                        <div id="chartContainer1" style="height: 280px; width: 100%;"></div>
+                        <div>
+                            <p>Click on box to check details.</p>
+                        </div>
+                                            <!-- Modal footer -->
+                        <div class="modal-footer bg-info text-white">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+        <script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+            
+</script>
+    </body>
+</html>
